@@ -38,7 +38,7 @@ modules:
       - install -D apply_extra "${FLATPAK_DEST}/bin/apply_extra"
       - install authy "${FLATPAK_DEST}/bin/"
     post-install:
-      - install -p -Dm644 "icon.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
+      - install -p -Dm644 "icon.png" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.png"
       - install -Dm644 authy.desktop "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
       - install -Dm644 com.authy.Authy.metainfo.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
     sources:
@@ -67,4 +67,4 @@ modules:
       - type: file
         path: authy.desktop
       - type: file
-        path: icon.svg
+        path: icon.png
