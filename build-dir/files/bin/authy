@@ -1,2 +1,0 @@
-#!/bin/sh
-TMPDIR=$XDG_CACHE_HOME zypak-wrapper /app/extra/authy/authy "$@"

@@ -1,5 +1,0 @@
-#!/bin/sh
-unsquashfs authy.snap
-rm authy.snap
-mv squashfs-root authy
-touch authy/chrome-sandbox && chmod +x authy/chrome-sandbox
