@@ -1,0 +1,70 @@
+app-id: com.authy.Authy 
+base: org.electronjs.Electron2.BaseApp
+base-version: '21.08'
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+sdk: org.freedesktop.Sdk
+command: authy 
+tags:
+  - proprietary
+finish-args:
+  - --socket=x11
+  - --device=dri
+  - --share=ipc
+  - --socket=pulseaudio
+  - --share=network
+  - --talk-name=org.freedesktop.secrets
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.kde.StatusNotifierWatcher
+modules:
+  - name: squashfs
+    buildsystem: simple
+    build-commands:
+      - make -C squashfs-tools -j ${FLATPAK_BUILDER_N_JOBS} install INSTALL_DIR=${FLATPAK_DEST}/bin
+    sources:
+      - type: archive
+        url: https://github.com/plougher/squashfs-tools/archive/4.4.tar.gz
+        sha256: a7fa4845e9908523c38d4acf92f8a41fdfcd19def41bd5090d7ad767a6dc75c3
+      - type: patch
+        path: xz_support.patch
+      - type: patch
+        path: gcc10.diff
+
+  - shared-modules/libsecret/libsecret.json
+
+  - name: authy 
+    buildsystem: simple
+    build-commands:
+      - install -D apply_extra "${FLATPAK_DEST}/bin/apply_extra"
+      - install authy "${FLATPAK_DEST}/bin/"
+    post-install:
+      - install -p -Dm644 "icon.svg" "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg"
+      - install -Dm644 authy.desktop "${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop"
+      - install -Dm644 com.authy.Authy.metainfo.xml "${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml"
+    sources:
+      - type: extra-data
+        filename: authy.snap
+        url: https://api.snapcraft.io/api/v1/snaps/download/H8ZpNgIoPyvmkgxOWw5MSzsXK1wRZiHn_9.snap 
+        sha256: 95fa21e425109c90104d05c890848b00b771ea7b4b6cc2b5dcdb63d42d87b99e
+        size: 66152
+        x-checker-data:
+          type: snapcraft
+          name: authy 
+          channel: stable
+      - type: script
+        dest-filename: apply_extra
+        commands:
+          - unsquashfs authy.snap
+          - rm authy.snap
+          - mv squashfs-root authy 
+          - touch authy/chrome-sandbox && chmod +x authy/chrome-sandbox
+      - type: script
+        dest-filename: authy 
+        commands:
+          - TMPDIR=$XDG_CACHE_HOME zypak-wrapper /app/extra/authy/authy "$@"
+      - type: file
+        path: com.authy.Authy.metainfo.xml
+      - type: file
+        path: authy.desktop
+      - type: file
+        path: icon.svg
