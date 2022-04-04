@@ -6,7 +6,9 @@
     <developer_name>Twilio</developer_name>
     <metadata_license>CC0-1.0</metadata_license>
     <summary>Twilio Authy two factor authentication desktop application</summary>
-    <description>Twilio Authy two factor authentication desktop application</description>
+    <description>
+        <p>Twilio Authy two factor authentication desktop application</p>
+    </description>
     <url type="homepage">https://authy.com/</url>
     <screenshots>
         <screenshot type="">
@@ -16,8 +18,6 @@
         </screenshot>
     </screenshots>
     <releases>
-        <release version="v2.1.0" date="03-09-2022">
-            <description>Unknown</description>
-        </release>
+        <release version="v2.1.0" date="03-09-2022"/>
     </releases>
 </component>
