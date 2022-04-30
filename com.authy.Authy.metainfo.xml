@@ -5,6 +5,7 @@
     <name>Authy</name>
     <developer_name>Twilio</developer_name>
     <metadata_license>CC0-1.0</metadata_license>
+    <project_license>LicenseRef-proprietary</project_license>
     <summary>Twilio Authy two factor authentication desktop application</summary>
     <description>
         <p>Twilio Authy two factor authentication desktop application</p>
